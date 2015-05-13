@@ -104,6 +104,28 @@ public OnPlayerUpdate(playerid)
 
 /* 
  * 
+ * ENTER_Stop(playerid)
+ * 
+ */
+
+stock ENTER_Stop(playerid)
+{
+	player_data[playerid][e_IsTrying] = false;
+	player_data[playerid][e_IsOpening] = false;
+
+	new vehicleid = player_data[playerid][e_VehicleID],
+		engine, lights, alarm, doors, bonnet, boot, objective;
+
+	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+	SetVehicleParamsEx(vehicleid, engine, lights, alarm, VEHICLE_PARAMS_OFF, bonnet, boot, objective);
+
+	ClearAnimations(playerid);
+}
+
+
+
+/* 
+ * 
  * ENTER_SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective)
  * 
  */
@@ -143,25 +165,3 @@ stock ENTER_GetVehicleParamsEx(vehicleid, &engine, &lights, &alarm, &doors, &bon
 #endif
 
 #define GetVehicleParamsEx ENTER_GetVehicleParamsEx
-
-
-
-/* 
- * 
- * ENTER_Stop(playerid)
- * 
- */
-
-stock ENTER_Stop(playerid)
-{
-	player_data[playerid][e_IsTrying] = false;
-	player_data[playerid][e_IsOpening] = false;
-
-	new vehicleid = player_data[playerid][e_VehicleID],
-		engine, lights, alarm, doors, bonnet, boot, objective;
-
-	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-	SetVehicleParamsEx(vehicleid, engine, lights, alarm, VEHICLE_PARAMS_OFF, bonnet, boot, objective);
-
-	ClearAnimations(playerid);
-}
