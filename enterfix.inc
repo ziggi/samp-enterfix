@@ -41,20 +41,19 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 		player_data[playerid][e_TickCount] = GetTickCount();
 	}
 
-#if defined ENTER_OnPlayerEnterVehicle
-	return ENTER_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
-#else
-	return 1;
-#endif
+	#if defined ENTER_OnPlayerEnterVehicle
+		return ENTER_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
+	#else
+		return 1;
+	#endif
 }
-
 #if defined _ALS_OnPlayerEnterVehicle
-	#error _ALS_OnPlayerEnterVehicle defined
+	#undef OnPlayerEnterVehicle
+#else
+	#define _ALS_OnPlayerEnterVehicle
 #endif
-#define _ALS_OnPlayerEnterVehicle
 
 #define OnPlayerEnterVehicle ENTER_OnPlayerEnterVehicle
-
 #if defined ENTER_OnPlayerEnterVehicle
 	forward ENTER_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
 #endif
@@ -81,13 +80,12 @@ public OnPlayerUpdate(playerid)
 		}
 	}
 
-#if defined ENTER_OnPlayerUpdate
-	return ENTER_OnPlayerUpdate(playerid);
-#else
-	return 1;
-#endif
+	#if defined ENTER_OnPlayerUpdate
+		return ENTER_OnPlayerUpdate(playerid);
+	#else
+		return 1;
+	#endif
 }
-
 #if defined _ALS_OnPlayerUpdate
 	#undef OnPlayerUpdate
 #else
@@ -95,7 +93,6 @@ public OnPlayerUpdate(playerid)
 #endif
 
 #define OnPlayerUpdate ENTER_OnPlayerUpdate
-
 #if defined ENTER_OnPlayerUpdate
 	forward ENTER_OnPlayerUpdate(playerid);
 #endif
@@ -132,7 +129,7 @@ stock ENTER_Stop(playerid)
 
 stock ENTER_SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective)
 {
-	is_locked[vehicleid] = doors == VEHICLE_PARAMS_ON ? true : false;
+	is_locked[vehicleid] = doors == VEHICLE_PARAMS_ON;
 	SetVehicleParamsEx(vehicleid, engine, lights, alarm, VEHICLE_PARAMS_OFF, bonnet, boot, objective);
 }
 
