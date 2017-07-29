@@ -130,7 +130,7 @@ stock ENTER_Stop(playerid)
 stock ENTER_SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective)
 {
 	is_locked[vehicleid] = doors == VEHICLE_PARAMS_ON;
-	SetVehicleParamsEx(vehicleid, engine, lights, alarm, VEHICLE_PARAMS_OFF, bonnet, boot, objective);
+	return SetVehicleParamsEx(vehicleid, engine, lights, alarm, VEHICLE_PARAMS_OFF, bonnet, boot, objective);
 }
 
 #if defined _ALS_SetVehicleParamsEx
