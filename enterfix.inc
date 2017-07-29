@@ -152,7 +152,11 @@ stock ENTER_SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, 
 stock ENTER_GetVehicleParamsEx(vehicleid, &engine, &lights, &alarm, &doors, &bonnet, &boot, &objective)
 {
 	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-	doors = is_locked[vehicleid] ? VEHICLE_PARAMS_ON : VEHICLE_PARAMS_OFF;
+	#if !defined FILTERSCRIPT
+		doors = ENTER_GetVehicleDoorsEx(vehicleid) ? VEHICLE_PARAMS_ON : VEHICLE_PARAMS_OFF;
+	#else
+		doors = CallRemoteFunction("ENTER_GetVehicleDoorsEx", "i", vehicleid) ? VEHICLE_PARAMS_ON : VEHICLE_PARAMS_OFF;
+	#endif
 }
 
 #if defined _ALS_GetVehicleParamsEx
@@ -162,3 +166,12 @@ stock ENTER_GetVehicleParamsEx(vehicleid, &engine, &lights, &alarm, &doors, &bon
 #endif
 
 #define GetVehicleParamsEx ENTER_GetVehicleParamsEx
+
+#if !defined FILTERSCRIPT
+	forward ENTER_GetVehicleDoorsEx(vehicleid);
+	public ENTER_GetVehicleDoorsEx(vehicleid)
+	{
+		return is_locked[vehicleid];
+	}
+#endif
+
