@@ -1,3 +1,5 @@
+# This fix was integrated in [fixes.inc](https://github.com/Open-GTO/sa-mp-fixes) use this instead.
+
 # samp-enterfix
 Fix for missing animation when enter locked vehicle as driver
 
