@@ -112,10 +112,12 @@ stock ENTER_Stop(playerid)
 
 	new vehicleid = player_data[playerid][e_VehicleID],
 		engine, lights, alarm, doors, bonnet, boot, objective;
-
-	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-	SetVehicleParamsEx(vehicleid, engine, lights, alarm, VEHICLE_PARAMS_OFF, bonnet, boot, objective);
-
+		
+	if (is_locked[vehicleid]) {
+		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+		SetVehicleParamsEx(vehicleid, engine, lights, alarm, VEHICLE_PARAMS_OFF, bonnet, boot, objective);
+	}
+	
 	ClearAnimations(playerid);
 }
 
