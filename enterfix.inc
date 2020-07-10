@@ -21,7 +21,33 @@ static
 	player_data[MAX_PLAYERS][e_Player_Data],
 	bool:is_locked[MAX_VEHICLES];
 
-
+/* 
+ * 
+ * ENTER_OnPlayerDisconnect(playerid, reason)
+ * 
+ */
+public OnPlayerDisconnect(playerid, reason)
+{
+	if (player_data[playerid][e_IsOpening] == true)
+	{
+		ENTER_Stop(playerid);
+		
+	}
+	#if defined ENTER_OnPlayerDisconnect
+		return ENTER_OnPlayerDisconnect(playerid, reason);
+	#else
+		return 1;
+	#endif
+}
+#if defined _ALS_OnPlayerDisconnect
+	#undef OnPlayerDisconnect
+#else
+	#define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect ENTER_OnPlayerDisconnect
+#if defined ENTER_OnPlayerDisconnect
+	forward ENTER_OnPlayerDisconnect(playerid, reason);
+#endif
 
 /* 
  * 
